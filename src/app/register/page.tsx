@@ -1,8 +1,10 @@
+'use client'
 import Logo from '@/components/Logo'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -24,7 +26,7 @@ const RegisterPage = () => {
 
                         {/* login with Google */}
                         <div className='w-auto h-auto py-2'>
-                            <Button className='min-w-sm bg-primary-foreground border-secondary/20 border'> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
+                            <Button  onClick={()=> signIn('google')} className='min-w-sm bg-primary-foreground border-secondary/20 border'> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
                         </div>
                         <div className=' flex flex-col gap-3 justify-center items-center'>
                             <div className='flex gap-2  justify-center items-center h-auto w-auto'>

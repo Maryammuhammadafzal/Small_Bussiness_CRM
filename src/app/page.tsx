@@ -1,6 +1,6 @@
 
 'use client'
-import { useSession  } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import LoginPage from "./login/page";
 import Dashboard from "./dashboard/page";
 
