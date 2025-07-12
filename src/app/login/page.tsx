@@ -58,7 +58,7 @@ const LoginPage = () => {
             {/* CopyRight */}
             <div className='w-full h-auto flex justify-center pb-6 items-center'>
                 <p className='lg:text-sm font-mono md:text-xs text-[10px]'>
-                    &copy; Copyright 2025. All Right Reserved by <Link href='/' className='underline'>Grow Easy</Link>
+                    &copy; Copyright 2025. All Right Reserved by <Link href='/login' className='underline'>Grow Easy</Link>
                 </p>
             </div>
         </div>
