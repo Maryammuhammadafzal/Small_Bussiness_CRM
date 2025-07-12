@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Geist_Mono } from "next/font/google";
+import { Montserrat, Lato } from "next/font/google";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -8,9 +8,10 @@ const montserrat = Montserrat({
   weight : ['100' , '200' , '300' , '400' , '500' , '600' , '700' ,'800' , '900']
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const lato = Lato({
+  variable: "--font-lato",
   subsets: ["latin"],
+  weight : ['100' , '300' , '400' , '700' , '900'],
 });
 
 export const metadata: Metadata = {
@@ -34,7 +35,7 @@ export default function RootLayout({
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
       <body
-        className={`${montserrat.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.variable} ${lato.variable} antialiased`}
       >
         {children}
       </body>
