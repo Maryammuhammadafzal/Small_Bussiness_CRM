@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { Montserrat, Lato } from "next/font/google";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight : ['100' , '200' , '300' , '400' , '500' , '600' , '700' ,'800' , '900']
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
 
 const lato = Lato({
   variable: "--font-lato",
   subsets: ["latin"],
-  weight : ['100' , '300' , '400' , '700' , '900'],
+  weight: ['100', '300', '400', '700', '900'],
 });
 
 export const metadata: Metadata = {
@@ -34,11 +35,13 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
-      <body
-        className={`${montserrat.variable} ${lato.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <SessionProvider>
+        <body
+          className={`${montserrat.variable} ${lato.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </SessionProvider>
     </html>
   );
 }

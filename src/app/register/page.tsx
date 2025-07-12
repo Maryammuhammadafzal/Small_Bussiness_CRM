@@ -33,20 +33,20 @@ const RegisterPage = () => {
                                 <hr className='w-auto min-w-[100px] border' />
                             </div>
 
-                           <div className='flex flex-col gap-2 w-full h-auto'>
-                             <div className="grid w-full max-w-sm items-center gap-3">
-                                <Label htmlFor="name">Full Name</Label>
-                                <Input type="name" id="name" placeholder="Maryam Afzal" />
+                            <div className='flex flex-col gap-2 w-full h-auto'>
+                                <div className="grid w-full max-w-sm items-center gap-3">
+                                    <Label htmlFor="name">Full Name</Label>
+                                    <Input type="name" id="name" placeholder="Maryam Afzal" />
+                                </div>
+                                <div className="grid w-full max-w-sm items-center gap-3">
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input type="email" id="email" placeholder="example@gmail.com" />
+                                </div>
+                                <div className="grid w-full max-w-sm items-center gap-3">
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input type="password" id="password" placeholder="********" />
+                                </div>
                             </div>
-                            <div className="grid w-full max-w-sm items-center gap-3">
-                                <Label htmlFor="email">Email</Label>
-                                <Input type="email" id="email" placeholder="example@gmail.com" />
-                            </div>
-                            <div className="grid w-full max-w-sm items-center gap-3">
-                                <Label htmlFor="password">Password</Label>
-                                <Input type="password" id="password" placeholder="********" />
-                            </div>
-                           </div>
 
                             <div className="flex items-center min-w-sm gap-3">
                                 <Checkbox id="save" />
@@ -54,10 +54,11 @@ const RegisterPage = () => {
                             </div>
 
                             <div className='w-auto h-auto py-3'>
-                                <Button className='bg-primary min-w-sm text-primary-foreground'>Log in</Button>
+                                <Button className='bg-primary min-w-sm text-primary-foreground'>Register</Button>
                             </div>
 
-                            <p className='text-xs text-secondary/50 flex gap-1'>You don't have an account? <Link href='/signup' className='text-primary underline'>Login</Link></p>
+                            <p className='text-xs text-secondary/50 flex gap-1'>Do you already have an account? <Link href='/login' className='text-primary underline'>Login</Link></p>
+
                         </div>
                     </div>
                 </div>
