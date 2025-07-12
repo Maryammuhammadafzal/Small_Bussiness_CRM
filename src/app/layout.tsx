@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Lato } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
+import SessionWrapper from "@/components/SessionWrapper";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -35,13 +35,13 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
-      <SessionProvider>
+      <SessionWrapper>
         <body
           className={`${montserrat.variable} ${lato.variable} antialiased`}
         >
           {children}
         </body>
-      </SessionProvider>
+      </SessionWrapper>
     </html>
   );
 }

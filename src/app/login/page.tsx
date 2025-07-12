@@ -1,3 +1,4 @@
+'use client'
 import Logo from '@/components/Logo'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -6,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-
+import { signIn } from "next-auth/react";
 const LoginPage = () => {
   return (
     <div className='w-full h-screen flex flex-col justify-between items-center'>
@@ -23,7 +24,7 @@ const LoginPage = () => {
 
           {/* login with Google */}
           <div className='w-auto h-auto py-2'>
-            <Button className='min-w-sm bg-primary-foreground border-secondary/20 border'> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
+            <Button className='min-w-sm bg-primary-foreground border-secondary/20 border' onClick={()=> signIn('google')}> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
           </div>
 
           <div className=' flex flex-col gap-4 justify-center items-center'>
