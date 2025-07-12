@@ -24,7 +24,7 @@ const LoginPage = () => {
 
           {/* login with Google */}
           <div className='w-auto h-auto py-2'>
-            <Button className='min-w-sm bg-primary-foreground border-secondary/20 border' onClick={()=> signIn('google')}> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
+            <Button className='min-w-sm bg-primary-foreground border-secondary/20 border' onClick={()=> signIn('google', { callbackUrl: '/dashboard' })}> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
           </div>
 
           <div className=' flex flex-col gap-4 justify-center items-center'>
