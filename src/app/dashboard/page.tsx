@@ -18,7 +18,7 @@ const Dashboard = () => {
     if (status === 'loading') return <Loading/>
 
     return (
-        <div>
+        <div className='w-full h-auto flex'>
             <Button onClick={() => signOut()} className='bg-primary min-w-sm text-primary-foreground'>Log Out</Button>
         </div>
     )

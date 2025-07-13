@@ -10,30 +10,34 @@ import React, { useEffect, useState } from 'react'
 import { signIn } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { Eye, EyeClosed } from 'lucide-react'
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [saveUser, setSaveUser] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleForm = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    console.log(form);
+    
   }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+ console.log(form);
     const res = await signIn('credentials', {
       email: form.email,
       password: form.password,
       redirect: false,
     });
-
+ console.log(res);
     if (res?.ok) {
       router.push('/dashboard');
-      if(saveUser) {
-      localStorage.setItem('user' , form.email);
-    }
-    toast.success("Login Successfully")
+      if (saveUser) {
+        localStorage.setItem('user', form.email);
+      }
+      toast.success("Login Successfully")
     } else {
       toast.error(res?.error || 'Invalid Credentials');
     }
@@ -67,11 +71,16 @@ const LoginPage = () => {
             <div className='w-full h-auto flex gap-2 flex-col'>
               <div className="grid w-full max-w-sm items-center gap-3">
                 <Label htmlFor="email">Email</Label>
-                <Input onChange={handleForm} type="email" id="email" placeholder="example@gmail.com" />
+                <Input onChange={handleForm} type="email" id="email" name='email' placeholder="example@gmail.com" />
               </div>
               <div className="grid w-full max-w-sm items-center gap-3">
                 <Label htmlFor="password">Password</Label>
-                <Input onChange={handleForm} type="password" id="password" placeholder="********" />
+                <div className='max-w-sm flex gap-2 items-center'>
+                  <Input onChange={handleForm} type={showPassword ? 'text' : 'password'} name='password' id="password" placeholder="********" />
+                  <div className='cursor-pointer' onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <Eye /> : <EyeClosed /> }
+                  </div>
+                </div>
               </div>
 
             </div>

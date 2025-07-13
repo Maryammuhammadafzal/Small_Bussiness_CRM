@@ -5,6 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import axios from 'axios'
+import { Eye, EyeClosed } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,6 +16,7 @@ import { toast } from 'sonner'
 const RegisterPage = () => {
     const [form, setForm] = useState({ name: '', email: '', password: '' });
     const [saveUser, setSaveUser] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
 
     const handleForm = (e: any) => {
@@ -25,15 +27,17 @@ const RegisterPage = () => {
         e.preventDefault();
         const res = await axios.post('/api/register', form)
 
-        if (res.status === 201) {
-            router.push('/login');
+        if (res.status === 200) {
+            router.push('/dashboard');
             if (saveUser) {
                 localStorage.setItem('user', form.email);
             }
             toast.success("Register Successfully")
+        } else if (res.status === 400) {
+            toast.error('User already exist');
         } else {
             const data = await res.data;
-            toast.error(data.error || 'Something went wrong');
+            toast.error(data.error || 'Invalid Credentials');
         }
     }
     return (
@@ -54,7 +58,7 @@ const RegisterPage = () => {
                         <div className='w-auto h-auto py-2'>
                             <Button onClick={() => signIn('google', { callbackUrl: '/dashboard' })} className='min-w-sm bg-primary-foreground border-secondary/20 border'> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
                         </div>
-                        <form  onSubmit={handleSubmit} className=' flex flex-col gap-3 justify-center items-center'>
+                        <form onSubmit={handleSubmit} className=' flex flex-col gap-3 justify-center items-center'>
                             <div className='flex gap-2  justify-center items-center h-auto w-auto'>
                                 <hr className='w-auto min-w-[100px] border' />
                                 <p className='text-xs font-mono text-foreground/60'>or Sing up With Email</p>
@@ -72,7 +76,12 @@ const RegisterPage = () => {
                                 </div>
                                 <div className="grid w-full max-w-sm items-center gap-3">
                                     <Label htmlFor="password">Password</Label>
-                                    <Input onChange={handleForm} type="password" id="password" name='password' placeholder="********" />
+                                    <div className='max-w-sm flex gap-2 items-center'>
+                                        <Input onChange={handleForm} type={showPassword ? 'text' : 'password'} id="password" placeholder="********" />
+                                        <div className='cursor-pointer' onClick={() => setShowPassword(!showPassword)}>
+                                            {showPassword ? <Eye /> : <EyeClosed />}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

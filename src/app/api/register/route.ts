@@ -11,6 +11,7 @@ export async function POST(req: Request) {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log('User already exist');
       return NextResponse.json({ error: "User already exist" }, { status: 400 });
     }
 
@@ -22,8 +23,10 @@ export async function POST(req: Request) {
         password: hashedPassword
     });
 
+    console.log('User Created Successfully');
     return NextResponse.json({ message: 'User Created Successfully' , user: newUser} , { status : 200})
   } catch (error) {
-    return NextResponse.json({ error: "Error adding User" }, { status: 500 });
+    console.log('Error creating User');
+    return NextResponse.json({ error: "Error creating User" }, { status: 500 });
   }
 }
