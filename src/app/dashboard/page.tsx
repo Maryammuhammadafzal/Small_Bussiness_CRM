@@ -12,7 +12,7 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import SideBar from '@/components/SideBar';
 import { Input } from '@/components/ui/input';
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
+import { LineChart, Line, ResponsiveContainer } from 'recharts';
 const Dashboard = () => {
     const { data: session, status } = useSession();
     const router = useRouter();
@@ -55,6 +55,17 @@ const Dashboard = () => {
                                     <div>
                                         <CardTitle className='text-4xl font-medium gap-0 flex items-end'>$12,321 <span className='text-sm text-primary/50'>.32</span></CardTitle>
                                     </div>
+                                    <ResponsiveContainer width="100%" height={50}>
+                                        <LineChart data={data}>
+                                            <Line
+                                                type="monotone" // smooth curve
+                                                dataKey="value"
+                                                stroke="#10b981" // tailwind green-500
+                                                strokeWidth={2}
+                                                dot={false}
+                                            />
+                                        </LineChart>
+                                    </ResponsiveContainer>
                                     <p className='flex gap-1 font-mono text-sm'><span className=' flex gap-1'><TrendingUp size={20} /> 12%</span>from last week</p>
                                 </CardContent>
                             </Card>
