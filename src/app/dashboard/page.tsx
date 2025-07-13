@@ -26,6 +26,14 @@ const Dashboard = () => {
 
     if (status === 'loading') return <Loading />
 
+    const data = [
+        { value: 10 },
+        { value: 15 },
+        { value: 12 },
+        { value: 18 },
+        { value: 20 },
+    ];
+
     return (
         <div className='w-full h-auto flex'>
             <SideBar />
@@ -46,26 +54,26 @@ const Dashboard = () => {
 
                     <div className='flex w-full flex-col gap-3 p-2'>
                         <div className='w-full h-auto grid grid-cols-3 gap-4 justify-center items-center'>
-                            <Card>
+                            <Card className='relative'>
                                 <CardHeader>
                                     <p className='text-secondary text-xs font-sans'>Total Income</p>
                                     <CardAction><EllipsisVertical size={20} className='text-primary/50' /></CardAction>
                                 </CardHeader>
                                 <CardContent className='flex flex-col gap-4'>
-                                    <div>
+                                    <div className='flex'>
                                         <CardTitle className='text-4xl font-medium gap-0 flex items-end'>$12,321 <span className='text-sm text-primary/50'>.32</span></CardTitle>
+                                        <ResponsiveContainer width="45%" height={50} className='absolute bottom-7 right-5'>
+                                            <LineChart data={data}>
+                                                <Line
+                                                    type="monotone" 
+                                                    dataKey="value"
+                                                    stroke="#10b981" 
+                                                    strokeWidth={2}
+                                                    dot={false}
+                                                />
+                                            </LineChart>
+                                        </ResponsiveContainer>
                                     </div>
-                                    <ResponsiveContainer width="100%" height={50}>
-                                        <LineChart data={data}>
-                                            <Line
-                                                type="monotone" // smooth curve
-                                                dataKey="value"
-                                                stroke="#10b981" // tailwind green-500
-                                                strokeWidth={2}
-                                                dot={false}
-                                            />
-                                        </LineChart>
-                                    </ResponsiveContainer>
                                     <p className='flex gap-1 font-mono text-sm'><span className=' flex gap-1'><TrendingUp size={20} /> 12%</span>from last week</p>
                                 </CardContent>
                             </Card>

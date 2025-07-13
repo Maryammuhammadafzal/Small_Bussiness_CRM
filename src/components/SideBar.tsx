@@ -30,7 +30,7 @@ const SideBar = () => {
                 icon: <LayoutGrid size={15} />
             },
             {
-                link: '/products',
+                link: 'dashboard/products',
                 name: 'Products',
                 icon: <Box size={15} />
             },
