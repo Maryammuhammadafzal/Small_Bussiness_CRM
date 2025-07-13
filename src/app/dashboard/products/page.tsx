@@ -21,14 +21,13 @@ const ProductPage = () => {
                     <header className='w-full h-auto flex justify-between items-center'>
                         <div className='flex flex-col gap-1 p-2'>
                             <DropdownMenu>
-                                <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+                                <DropdownMenuTrigger>Products</DropdownMenuTrigger>
                                 <DropdownMenuContent>
-                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                    <DropdownMenuLabel>Product</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                                    <DropdownMenuItem>Team</DropdownMenuItem>
-                                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                                    <DropdownMenuItem>All Product</DropdownMenuItem>
+                                    <DropdownMenuItem>Top Selling</DropdownMenuItem>
+                                    <DropdownMenuItem>Least Selling</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
