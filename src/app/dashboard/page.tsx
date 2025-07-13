@@ -7,10 +7,12 @@ import { useRouter } from 'next/navigation';
 import Logo from '@/components/Logo';
 import Link from 'next/link';
 import { Bell, Box, ChartNoAxesColumn, ChartNoAxesColumnIncreasing, Clipboard, Headphones, LayoutGrid, Settings, Store, Users } from 'lucide-react';
+import Image from 'next/image';
 
 const Dashboard = () => {
     const { data: session, status } = useSession();
     const router = useRouter();
+console.log(session);
 
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -78,7 +80,7 @@ const Dashboard = () => {
     return (
         <div className='w-full h-auto flex'>
             <div className="side-menu relative max-w-xs h-screen">
-                <div className='fixed top-0 left-0 h-screen w-2xs bg-primary/5 flex justify-between text-primary/60 p-[1px]'>
+                <div className='fixed top-0 left-0 h-screen w-2xs bg-primary/5 flex flex-col justify-between text-primary/60 p-[1px]'>
                     <div className='w-full h-full flex-col gap-2'>
                         <div className='w-auto h-auto'>
                             <Logo />
@@ -103,8 +105,14 @@ const Dashboard = () => {
                             </div>
                         </nav>
                     </div>
-                    <div className='w-full h-auto flex gap-2 px-3'>
-<div className=''></div>
+                    <div className='w-full h-auto flex gap-2  py-6 px-3 items-center'>
+                        <Link href='/profile' className='w-12 h-12 rounded-full flex justify-center items-center'>
+                            <Image src={session?.user?.image || '/images/profile-avatar.jpg'} alt='profile-image' width={14} height={14} className='h-full w-full rounded-full object-cover' />
+                        </Link>
+                        <Link href='/profile' className='flex flex-col gap-1 h-auto w-auto'>
+                            <h2 className='text-primary text-lg font-medium font-sans'>{session?.user?.name}</h2>
+                            <p className='text-secondary text-[10px] font-sans'>{session?.user?.email}</p>
+                        </Link>
                     </div>
                 </div>
             </div>
