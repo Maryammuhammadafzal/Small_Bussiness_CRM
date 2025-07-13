@@ -10,10 +10,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { toast } from 'sonner'
 
 const RegisterPage = () => {
     const [form, setForm] = useState({ name: '', email: '', password: '' });
-    const [error, setError] = useState('')
+    const [saveUser, setSaveUser] = useState(false);
     const router = useRouter();
 
     const handleForm = (e: any) => {
@@ -26,9 +27,13 @@ const RegisterPage = () => {
 
         if (res.status === 201) {
             router.push('/login');
+            if (saveUser) {
+                localStorage.setItem('user', form.email);
+            }
+            toast("Register Successfully")
         } else {
             const data = await res.data;
-            setError(data.error || 'Something went wrong');
+            toast(data.error || 'Something went wrong');
         }
     }
     return (
@@ -49,14 +54,14 @@ const RegisterPage = () => {
                         <div className='w-auto h-auto py-2'>
                             <Button onClick={() => signIn('google', { callbackUrl: '/dashboard' })} className='min-w-sm bg-primary-foreground border-secondary/20 border'> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
                         </div>
-                        <div className=' flex flex-col gap-3 justify-center items-center'>
+                        <form  onSubmit={handleSubmit} className=' flex flex-col gap-3 justify-center items-center'>
                             <div className='flex gap-2  justify-center items-center h-auto w-auto'>
                                 <hr className='w-auto min-w-[100px] border' />
                                 <p className='text-xs font-mono text-foreground/60'>or Sing up With Email</p>
                                 <hr className='w-auto min-w-[100px] border' />
                             </div>
 
-                            <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-full h-auto'>
+                            <div className='flex flex-col gap-2 w-full h-auto'>
                                 <div className="grid w-full max-w-sm items-center gap-3">
                                     <Label htmlFor="name">Full Name</Label>
                                     <Input onChange={handleForm} type="name" id="name" name='name' placeholder="Maryam Afzal" />
@@ -69,25 +74,20 @@ const RegisterPage = () => {
                                     <Label htmlFor="password">Password</Label>
                                     <Input onChange={handleForm} type="password" id="password" name='password' placeholder="********" />
                                 </div>
-                            </form>
+                            </div>
 
                             <div className="flex items-center min-w-sm gap-3">
-                                <Checkbox id="save" />
+                                <Checkbox onChange={() => setSaveUser(!saveUser)} id="save" />
                                 <Label htmlFor="save">Remember me</Label>
                             </div>
 
                             <div className='w-auto h-auto py-3'>
-                                <Button onClick={() => signIn('credentials', {
-                                    email,
-                                    password,
-                                    redirect: true,
-                                    callbackUrl: '/dashboard',
-                                })} className='bg-primary min-w-sm text-primary-foreground'>Register</Button>
+                                <Button type='submit' className='bg-primary min-w-sm text-primary-foreground'>Register</Button>
                             </div>
 
                             <p className='text-xs text-secondary/50 flex gap-1'>Do you already have an account? <Link href='/login' className='text-primary underline'>Login</Link></p>
 
-                        </div>
+                        </form>
                     </div>
                 </div>
 

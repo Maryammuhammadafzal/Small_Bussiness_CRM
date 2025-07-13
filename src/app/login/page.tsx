@@ -6,9 +6,39 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { signIn } from "next-auth/react";
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 const LoginPage = () => {
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [saveUser, setSaveUser] = useState(false);
+  const router = useRouter();
+
+  const handleForm = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const res = await signIn('credentials', {
+      email: form.email,
+      password: form.password,
+      redirect: false,
+    });
+
+    if (res?.ok) {
+      router.push('/dashboard');
+      if(saveUser) {
+      localStorage.setItem('user' , form.email);
+    }
+    toast("Login Successfully")
+    } else {
+      toast(res?.error || 'Invalid Credentials');
+    }
+
+  }
   return (
     <div className='w-full h-screen flex flex-col justify-between items-center'>
       <div className='w-full h-auto flex flex-col justify-start gap-4 items-center'>
@@ -24,38 +54,38 @@ const LoginPage = () => {
 
           {/* login with Google */}
           <div className='w-auto h-auto py-2'>
-            <Button className='min-w-sm bg-primary-foreground border-secondary/20 border' onClick={()=> signIn('google', { callbackUrl: '/dashboard' })}> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
+            <Button className='min-w-sm bg-primary-foreground border-secondary/20 border' onClick={() => signIn('google', { callbackUrl: '/dashboard' })}> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
           </div>
 
-          <div className=' flex flex-col gap-4 justify-center items-center'>
+          <form className=' flex flex-col gap-4 justify-center items-center'>
             <div className='flex gap-2 justify-center items-center h-auto w-auto'>
               <hr className='w-auto min-w-[100px] border' />
               <p className='text-xs font-mono text-foreground/60'>or Log in With Email</p>
               <hr className='w-auto min-w-[100px] border' />
             </div>
 
-            <div className='w-full h-auto flex flex-col'>
+            <div className='w-full h-auto flex gap-2 flex-col'>
               <div className="grid w-full max-w-sm items-center gap-3">
                 <Label htmlFor="email">Email</Label>
-                <Input type="email" id="email" placeholder="example@gmail.com" />
+                <Input onChange={handleForm} type="email" id="email" placeholder="example@gmail.com" />
               </div>
               <div className="grid w-full max-w-sm items-center gap-3">
                 <Label htmlFor="password">Password</Label>
-                <Input type="password" id="password" placeholder="********" />
+                <Input onChange={handleForm} type="password" id="password" placeholder="********" />
               </div>
 
             </div>
             <div className="flex items-center min-w-sm gap-3">
-              <Checkbox id="save" />
+              <Checkbox onChange={() => setSaveUser(!saveUser)} id="save" />
               <Label htmlFor="save">Remember me</Label>
             </div>
 
             <div className='w-auto h-auto py-3'>
-              <Button className='bg-primary min-w-sm text-primary-foreground'>Log in</Button>
+              <Button type='submit' className='bg-primary min-w-sm text-primary-foreground'>Log in</Button>
             </div>
 
             <p className='text-xs text-secondary/50 flex gap-1'>If you don't have an account! <Link href='/register' className='text-primary underline'>Create an Account</Link></p>
-          </div>
+          </form>
         </div>
       </div>
 

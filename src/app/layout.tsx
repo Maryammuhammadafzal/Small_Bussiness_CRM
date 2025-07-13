@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Lato } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/SessionWrapper";
+import { Toaster } from "@/components/ui/sonner"
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -41,6 +42,7 @@ export default function RootLayout({
         >
           {children}
         </body>
+        <Toaster/>
       </SessionWrapper>
     </html>
   );
