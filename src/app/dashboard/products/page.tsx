@@ -13,6 +13,7 @@ import {
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import ProductTable from '@/components/ProductTable'
+import Link from 'next/link'
 
 const ProductPage = () => {
     return (
@@ -34,12 +35,12 @@ const ProductPage = () => {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
-                        <div className='flex h-auto w-auto p-2 gap-2 relative'>
+                        <Link href='/dashboard/products/add' className='flex h-auto w-auto p-2 gap-2 relative'>
                             <Button className='bg-primary text-xs text-primary-foreground'><Plus size={14} /> Add Product</Button>
                             {/* <Input type='search' id="search" name='search' placeholder="Search" className='min-w-[230px] pl-8' />
                             <Search className='absolute w-4 h-4 top-4.5 left-4 text-lg text-primary/50' />
                             <Button className='bg-primary text-primary-foreground'><CloudDownload /> Export</Button> */}
-                        </div>
+                        </Link>
                     </header>
 
                     <Card>
