@@ -199,12 +199,12 @@ const ProductTable = () => {
     <div className="w-full">
       <div className="flex items-center pb-3">
         <Input
-          placeholder="Filter emails..."
+          placeholder="Filter Products"
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-xs"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
