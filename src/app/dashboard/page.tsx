@@ -8,11 +8,12 @@ import Logo from '@/components/Logo';
 import Link from 'next/link';
 import { Bell, Box, ChartNoAxesColumn, ChartNoAxesColumnIncreasing, Clipboard, Headphones, LayoutGrid, Settings, Store, Users } from 'lucide-react';
 import Image from 'next/image';
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
 
 const Dashboard = () => {
     const { data: session, status } = useSession();
     const router = useRouter();
-console.log(session);
+    console.log(session);
 
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -29,37 +30,37 @@ console.log(session);
             icon: <LayoutGrid size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/products',
             name: 'Products',
             icon: <Box size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/store',
             name: 'Store',
             icon: <Store size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/customers',
             name: 'Customers',
             icon: <Users size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/analytics',
             name: 'Analytics',
             icon: <ChartNoAxesColumnIncreasing size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/notification',
             name: 'Notifications',
             icon: <Bell size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/reports',
             name: 'Reports',
             icon: <Clipboard size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/conversion',
             name: 'Conversion',
             icon: <ChartNoAxesColumn size={15} />
         },
@@ -67,14 +68,28 @@ console.log(session);
     ];
     const other_data = [
         {
-            link: '/dashboard',
+            link: '/help',
             name: 'Help center',
             icon: <Headphones size={15} />
         },
         {
-            link: '/dashboard',
+            link: '/setting',
             name: 'Settings',
             icon: <Settings size={15} />
+        },
+    ];
+    const analytics_data = [
+        {
+            link: '/analytics/store',
+            name: 'Store'
+        },
+        {
+            link: '/analytics/product',
+            name: 'Product'
+        },
+        {
+            link: '/analytics/visitors',
+            name: 'Visitors'
         },
     ]
     return (
@@ -85,14 +100,37 @@ console.log(session);
                         <div className='w-auto h-auto'>
                             <Logo />
                         </div>
-                        <nav className='flex flex-col w-full h-auto gap-1'>
-                            <ul className='border-b-2 border-primary-50 py-3 flex flex-col h-auto gap-2 w-full'>
+                        <NavigationMenu className='flex flex-col w-full h-auto gap-1'>
+                            <NavigationMenuList className='border-b-2 border-primary-50 py-3 flex flex-col h-auto gap-2 w-full'>
                                 {nav_data.map((nav, index) => (
-                                    <li key={index} className='w-full h-auto'>
-                                        <Link href={nav.link} className='w-full py-1 hover:border-l-4 focus:border-l-4 rounded-xs border-primary  h-auto hover:text-primary text-sm gap-3 flex pl-6 items-center focus:text-primary'> {nav.icon} {nav.name}</Link>
-                                    </li>
+                                    <NavigationMenuItem key={index} className="w-full h-auto">
+                                        {index === 4 ? (
+                                            <div className="relative w-full group h-auto">
+                                                <NavigationMenuTrigger className="w-full py-1 hover:border-l-4 focus:border-l-4 rounded-xs border-primary h-auto hover:text-primary text-sm gap-3 flex pl-6 items-center focus:text-primary">
+                                                    <p className="flex gap-2">{nav.icon} {nav.name}</p>
+                                                </NavigationMenuTrigger>
+
+                                                <div className=" group-hover:flex  hidden h-[120px] py-2 pl-8  min-w-[288px] rounded-none">
+                                                    <ul className="flex w-full flex-col border-l border-l-primary/20 gap-2 ">
+                                                        {analytics_data.map((analytics, subIndex) => (
+                                                            <li key={subIndex} className="w-auto h-auto">
+                                                                <Link href={analytics.link} className="w-auto py-1 rounded-xs border-primary h-auto hover:text-primary text-sm gap-3 flex pl-6 items-center focus:text-primary">
+                                                                    {analytics.name}
+                                                                </Link>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <Link href={nav.link} className="w-full py-1 hover:border-l-4 focus:border-l-4 rounded-xs border-primary h-auto hover:text-primary text-sm gap-3 flex pl-6 items-center focus:text-primary">
+                                                {nav.icon} {nav.name}
+                                            </Link>
+                                        )}
+                                    </NavigationMenuItem>
+
                                 ))}
-                            </ul>
+                            </NavigationMenuList>
                             <div className='h-auto w-full flex-col flex gap-2'>
                                 <h3 className='text-primary/50 text-sm pl-5 py-1'>Others</h3>
                                 <ul className='flex flex-col h-auto w-full gap-2'>
@@ -103,7 +141,7 @@ console.log(session);
                                     ))}
                                 </ul>
                             </div>
-                        </nav>
+                        </NavigationMenu>
                     </div>
                     <div className='w-full h-auto flex gap-2  py-6 px-3 items-center'>
                         <Link href='/profile' className='w-12 h-12 rounded-full flex justify-center items-center'>
