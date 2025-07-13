@@ -48,7 +48,7 @@ const Dashboard = () => {
                         <div className='w-full h-auto grid grid-cols-3 gap-4 justify-center items-center'>
                             <Card>
                                 <CardHeader>
-                                    
+                                    <p className='text-secondary text-xs font-sans'>Total Income</p>
                                     <CardAction><EllipsisVertical size={20} className='text-primary/50' /></CardAction>
                                 </CardHeader>
                                 <CardContent className='flex flex-col gap-4'>
