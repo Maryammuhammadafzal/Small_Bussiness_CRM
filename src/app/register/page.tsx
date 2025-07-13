@@ -30,10 +30,10 @@ const RegisterPage = () => {
             if (saveUser) {
                 localStorage.setItem('user', form.email);
             }
-            toast("Register Successfully")
+            toast.success("Register Successfully")
         } else {
             const data = await res.data;
-            toast(data.error || 'Something went wrong');
+            toast.error(data.error || 'Something went wrong');
         }
     }
     return (

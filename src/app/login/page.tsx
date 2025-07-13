@@ -33,9 +33,9 @@ const LoginPage = () => {
       if(saveUser) {
       localStorage.setItem('user' , form.email);
     }
-    toast("Login Successfully")
+    toast.success("Login Successfully")
     } else {
-      toast(res?.error || 'Invalid Credentials');
+      toast.error(res?.error || 'Invalid Credentials');
     }
 
   }
@@ -57,7 +57,7 @@ const LoginPage = () => {
             <Button className='min-w-sm bg-primary-foreground border-secondary/20 border' onClick={() => signIn('google', { callbackUrl: '/dashboard' })}> <Image src='/icon/google-icon.png' alt='Google Icon' width={20} height={20} />  Continue with Google</Button>
           </div>
 
-          <form className=' flex flex-col gap-4 justify-center items-center'>
+          <form onSubmit={handleSubmit} className=' flex flex-col gap-4 justify-center items-center'>
             <div className='flex gap-2 justify-center items-center h-auto w-auto'>
               <hr className='w-auto min-w-[100px] border' />
               <p className='text-xs font-mono text-foreground/60'>or Log in With Email</p>

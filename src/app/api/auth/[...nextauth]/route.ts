@@ -8,18 +8,12 @@ import GoogleProvider from "next-auth/providers/google";
 const handler = NextAuth({
   providers: [
     Credentials({
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
       credentials: {
         email: {
           type: "email",
-          label: "Email",
-          placeholder: "johndoe@gmail.com",
         },
         password: {
           type: "password",
-          label: "Password",
-          placeholder: "*****",
         },
       },
       authorize: async (credentials) => {

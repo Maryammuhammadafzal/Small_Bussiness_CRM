@@ -36,14 +36,14 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
-      <SessionWrapper>
-        <body
-          className={`${montserrat.variable} ${lato.variable} antialiased`}
-        >
+      <body
+        className={`${montserrat.variable} ${lato.variable} antialiased`}
+      >
+        <SessionWrapper>
           {children}
-        </body>
-        <Toaster/>
-      </SessionWrapper>
+        </SessionWrapper>
+        <Toaster position="top-right" />
+      </body>
     </html>
   );
 }
