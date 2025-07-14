@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/breadcrumb"
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Image, Video } from 'lucide-react'
+import { Input } from '@/components/ui/input'
 
 const AddProductPage = () => {
     return (
@@ -54,11 +56,83 @@ const AddProductPage = () => {
                         <h2 className='font-semibold text-2xl font-mono'>
                             New Product
                         </h2>
-                       <Card>
-                        <CardHeader>
-                            <CardTitle>Product Information</CardTitle>
-                        </CardHeader>
-                       </Card>
+                        <Card>
+                            <CardHeader className='border-b '>
+                                <CardTitle>Product Information</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                {/* Product Images */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2'>
+                                        <h3 className='text-sm font-medium'>Product Photos <sup className='text-red-500'>*</sup></h3>
+                                        <p className='text-xs w-sm text-primary/80'>The image format must be .png or .jpg . The image size is 0 icons 250 x 250. Drag and upload an image of at icons 3 images in order to attract user. </p>
+                                    </div>
+                                    <div className='w-auto h-auto p-3 flex justify-center items-center'>
+                                        <Card className='w-[110px] h-[120px] flex justify-center items-center '>
+                                            <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
+                                                <Image size={24} />
+                                                <h4 className='text-xs text-primary font-semibold'>Add Photos</h4>
+                                                <p className='text-xs text-primary/50'>0/9</p>
+                                            </CardContent>
+                                        </Card>
+                                    </div>
+                                </div>
+
+                                {/* Product Video */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-end'>Product Video <p className='text-primary/50 text-[10px]'>(optional)</p></h3>
+                                        <ul className='text-xs text-primary/80 w-sm pl-3 '>
+                                            <li className='list-disc py-[1px]'>
+                                                Max resolution 1200 x 1200 and size 3000mb.
+                                            </li>
+                                            <li className='list-disc py-[1px]'>
+                                                Duration 10-60 seconds
+                                            </li>
+                                            <li className='list-disc py-[1px]'>
+                                                Format MP4
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className='w-auto h-auto p-3 flex justify-center items-center'>
+                                        <Card className='w-[110px] h-[120px] flex justify-center items-center '>
+                                            <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
+                                                <Video size={24} />
+                                                <h4 className='text-xs text-primary font-semibold'>Add Video</h4>
+                                            </CardContent>
+                                        </Card>
+                                    </div>
+                                </div>
+
+                                {/* Product Name */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-end'>Product Nmae <sup className='text-red-500'>*</sup></h3>
+                                        <p className='text-xs text-primary/80 w-sm '>
+                                            Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
+                                        </p>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex justify-center items-center'>
+                                        <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                    </div>
+                                </div>
+
+                                {/* Product Nmae */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-end'>Product Nmae <sup className='text-red-500'>*</sup></h3>
+                                        <p className='text-xs text-primary/80 w-sm '>
+                                            Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
+                                        </p>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex justify-center items-center'>
+                                        <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                    </div>
+                                </div>
+
+
+                            </CardContent>
+                        </Card>
                     </section>
                 </div>
             </div>

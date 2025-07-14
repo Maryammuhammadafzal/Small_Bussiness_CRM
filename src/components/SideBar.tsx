@@ -143,7 +143,7 @@ const SideBar = () => {
                         </NavigationMenu>
                     </div>
                     <div className='w-full h-auto flex gap-2  pb-20 px-3 items-center'>
-                        <Link href='/profile' className='w-20 h-10 rounded-full flex justify-center items-center'>
+                        <Link href='/profile' className='w-10 h-8 rounded-full flex justify-center items-center'>
                             <Image src={session?.user?.image || '/images/profile-avatar.jpg'} alt='profile-image' width={14} height={14} className='h-full w-full rounded-full object-cover' />
                         </Link>
                         <Link href='/profile' className='flex flex-col gap-1 h-auto w-auto'>
