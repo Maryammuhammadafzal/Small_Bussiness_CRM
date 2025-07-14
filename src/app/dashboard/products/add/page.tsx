@@ -13,6 +13,13 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Image, Video } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 const AddProductPage = () => {
     return (
@@ -112,8 +119,11 @@ const AddProductPage = () => {
                                             Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
                                         </p>
                                     </div>
-                                    <div className='w-full h-auto p-3 flex justify-center items-center'>
+                                    <div className='w-full h-auto p-3 flex flex-col justify-center items-center'>
                                         <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <div className='flex w-full justify-end items-start'>
+                                            <p className='text-xs text-primary/80'>0/40</p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -126,7 +136,16 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <Select>
+                                            <SelectTrigger className="w-[180px]">
+                                                <SelectValue placeholder="Theme" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="light">Light</SelectItem>
+                                                <SelectItem value="dark">Dark</SelectItem>
+                                                <SelectItem value="system">System</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </div>
 
