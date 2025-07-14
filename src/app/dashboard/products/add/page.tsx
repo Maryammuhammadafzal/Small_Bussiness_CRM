@@ -67,7 +67,7 @@ const AddProductPage = () => {
                             <CardHeader className='border-b '>
                                 <CardTitle>Product Information</CardTitle>
                             </CardHeader>
-                            <CardContent>
+                            <CardContent className='space-y-2'>
                                 {/* Product Images */}
                                 <div className='product-photos w-auto h-auto items-center flex gap-3'>
                                     <div className='flex flex-col gap-2'>
@@ -114,7 +114,7 @@ const AddProductPage = () => {
                                 {/* Product Name */}
                                 <div className='product-photos w-auto h-auto items-center flex gap-3'>
                                     <div className='flex flex-col gap-2'>
-                                        <h3 className='text-sm font-medium flex gap-1 items-end'>Product Nmae <sup className='text-red-500'>*</sup></h3>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Name <sup className='text-red-500'>*</sup></h3>
                                         <p className='text-xs text-primary/80 w-sm '>
                                             Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
                                         </p>
@@ -127,23 +127,29 @@ const AddProductPage = () => {
                                     </div>
                                 </div>
 
-                                {/* Product Nmae */}
+                                {/* Product Category */}
                                 <div className='product-photos w-auto h-auto items-center flex gap-3'>
                                     <div className='flex flex-col gap-2'>
-                                        <h3 className='text-sm font-medium flex gap-1 items-end'>Product Nmae <sup className='text-red-500'>*</sup></h3>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Category <sup className='text-red-500'>*</sup></h3>
                                         <p className='text-xs text-primary/80 w-sm '>
-                                            Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
+                                           Choose your product category so that it can be included in your store category list.
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
                                         <Select>
-                                            <SelectTrigger className="w-[180px]">
-                                                <SelectValue placeholder="Theme" />
+                                            <SelectTrigger className="w-full text-xs">
+                                                <SelectValue placeholder="Choose Category" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="light">Light</SelectItem>
-                                                <SelectItem value="dark">Dark</SelectItem>
-                                                <SelectItem value="system">System</SelectItem>
+                                                <SelectItem value="clothes">Clothes</SelectItem>
+                                                <SelectItem value="kitchen-things">Kitchen Accessories</SelectItem>
+                                                <SelectItem value="electronics">Electronics</SelectItem>
+                                                <SelectItem value="home-decor">Home Decor</SelectItem>
+                                                <SelectItem value="house-hold-things">House Hold Things</SelectItem>
+                                                <SelectItem value="jwelery">Jwelery</SelectItem>
+                                                <SelectItem value="bags">Bags</SelectItem>
+                                                <SelectItem value="perfumes">Perfumes</SelectItem>
+                                                <SelectItem value="shoes">Shoes</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
