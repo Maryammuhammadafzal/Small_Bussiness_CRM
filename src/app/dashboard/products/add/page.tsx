@@ -21,6 +21,8 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from '@/components/ui/textarea'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
 
 const AddProductPage = () => {
     return (
@@ -64,7 +66,8 @@ const AddProductPage = () => {
                         <h2 className='font-semibold text-2xl font-mono'>
                             New Product
                         </h2>
-                        <Card>
+                        {/* Product Information */}
+                        <Card className='bg-transparent'>
                             <CardHeader className='border-b '>
                                 <CardTitle>Product Information</CardTitle>
                             </CardHeader>
@@ -120,7 +123,7 @@ const AddProductPage = () => {
                                             Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
                                         </p>
                                     </div>
-                                    <div className='w-full h-auto p-3 flex flex-col justify-center items-center'>
+                                    <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
                                         <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/40</p>
@@ -164,8 +167,87 @@ const AddProductPage = () => {
                                          Add a minimum of 3000 words by explaining the category of the product.
                                         </p>
                                     </div>
-                                    <div className='w-full h-auto p-3 flex justify-center items-center'>
+                                    <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
                                        <Textarea placeholder='Write Product Description' className='text-xs' />
+                                       <div className='flex w-full justify-end items-start'>
+                                            <p className='text-xs text-primary/80'>0/3000</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </CardContent>
+                        </Card>
+                        {/* Specifications */}
+                        <Card className='bg-transparent'>
+                            <CardHeader className='border-b '>
+                                <CardTitle>Specifications</CardTitle>
+                            </CardHeader>
+                            <CardContent className='space-y-2'>
+                                {/* Product Status */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col w-sm gap-2'>
+                                        <h3 className='text-sm font-medium'>Status <sup className='text-red-500'>*</sup></h3>
+                                    </div>
+                                    <div className='w-auto h-auto p-3 gap-3 flex justify-center items-center'>
+                                    <Switch id='active' />
+                                    <Label htmlFor='active'>NonActive</Label>
+                                    </div>
+                                </div>
+
+                        
+
+                                {/* Product Name */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Name <sup className='text-red-500'>*</sup></h3>
+                                        <p className='text-xs text-primary/80 w-sm '>
+                                            Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
+                                        </p>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
+                                        <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <div className='flex w-full justify-end items-start'>
+                                            <p className='text-xs text-primary/80'>0/40</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Product Brand */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Brand <sup className='text-red-500'>*</sup></h3>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex justify-center items-center'>
+                                        <Select>
+                                            <SelectTrigger className="w-full text-xs">
+                                                <SelectValue placeholder="Select Brand" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="brand-1">Brand 1</SelectItem>
+                                                <SelectItem value="brand-2">Brand 2</SelectItem>
+                                                <SelectItem value="brand-3">Brand 3</SelectItem>
+                                                <SelectItem value="brand-4">Brand 4</SelectItem>
+                                                <SelectItem value="brand-5">Brand 5</SelectItem>
+                                                <SelectItem value="brand-6">Brand 6</SelectItem>
+                                                <SelectItem value="brand-7">Brand 7</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+
+                                {/* Product Description */}
+                                <div className='product-photos w-auto h-auto items-start  flex gap-3'>
+                                    <div className='flex flex-col gap-2 pt-6'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Description <sup className='text-red-500'>*</sup></h3>
+                                        <p className='text-xs text-primary/80 w-sm '>
+                                         Add a minimum of 3000 words by explaining the category of the product.
+                                        </p>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
+                                       <Textarea placeholder='Write Product Description' className='text-xs' />
+                                       <div className='flex w-full justify-end items-start'>
+                                            <p className='text-xs text-primary/80'>0/3000</p>
+                                        </div>
                                     </div>
                                 </div>
 
