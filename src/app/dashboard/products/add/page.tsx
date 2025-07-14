@@ -20,6 +20,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from '@/components/ui/textarea'
 
 const AddProductPage = () => {
     return (
@@ -130,7 +131,7 @@ const AddProductPage = () => {
                                 {/* Product Category */}
                                 <div className='product-photos w-auto h-auto items-center flex gap-3'>
                                     <div className='flex flex-col gap-2'>
-                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Category <sup className='text-red-500'>*</sup></h3>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Category <sup className='text-red-500'>*</sup></h3>
                                         <p className='text-xs text-primary/80 w-sm '>
                                            Choose your product category so that it can be included in your store category list.
                                         </p>
@@ -155,6 +156,18 @@ const AddProductPage = () => {
                                     </div>
                                 </div>
 
+                                {/* Product Description */}
+                                <div className='product-photos w-auto h-auto items-start  flex gap-3'>
+                                    <div className='flex flex-col gap-2 pt-6'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Description <sup className='text-red-500'>*</sup></h3>
+                                        <p className='text-xs text-primary/80 w-sm '>
+                                         Add a minimum of 3000 words by explaining the category of the product.
+                                        </p>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex justify-center items-center'>
+                                       <Textarea placeholder='Write Product Description' className='text-xs' />
+                                    </div>
+                                </div>
 
                             </CardContent>
                         </Card>
