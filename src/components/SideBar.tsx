@@ -7,13 +7,12 @@ import Logo from '@/components/Logo';
 import Link from 'next/link';
 import { Bell, Box, ChartNoAxesColumn, ChartNoAxesColumnIncreasing, Clipboard, Headphones, LayoutGrid, Settings, Store, Users } from 'lucide-react';
 import Image from 'next/image';
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
 
 
 const SideBar = () => {
     const { data: session, status } = useSession();
         const router = useRouter();
-        console.log(session);
     
         useEffect(() => {
             if (status === 'unauthenticated') {
@@ -30,7 +29,7 @@ const SideBar = () => {
                 icon: <LayoutGrid size={15} />
             },
             {
-                link: 'dashboard/products',
+                link: '/dashboard/products',
                 name: 'Products',
                 icon: <Box size={15} />
             },

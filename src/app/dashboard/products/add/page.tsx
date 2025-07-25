@@ -1,6 +1,6 @@
 'use client'
 import SideBar from '@/components/SideBar'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -27,6 +27,8 @@ import { Label } from '@/components/ui/label'
 import { useRouter } from 'next/navigation'
 
 const AddProductPage = () => {
+    let nameRef = useRef(null);
+
     const router = useRouter();
     const [formData, setFormData] = useState({
         product_images: [],
@@ -41,7 +43,8 @@ const AddProductPage = () => {
         product_stock: 0,
     });
 
-    const handleFormData = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(nameRef?.current?.value);
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         console.log(formData);
@@ -158,7 +161,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={(value) => handleFormData('product_name', value)} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <Input ref={nameRef} onChange={() => handleFormData} maxLength={40} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/40</p>
                                         </div>
@@ -174,7 +177,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Select onValueChange={(value) => handleFormData("product_category", value)}>
+                                        <Select onValueChange={() => handleFormData}>
                                             <SelectTrigger className="w-full text-xs">
                                                 <SelectValue placeholder="Choose Category" />
                                             </SelectTrigger>
@@ -202,7 +205,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
-                                        <Textarea onChange={(value) => handleFormData('product_description', value)} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
+                                        <Textarea onChange={() => handleFormData} minLength={1500} maxLength={3000} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/3000</p>
                                         </div>
@@ -223,7 +226,7 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium'>Status <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 gap-3 flex justify-start items-start'>
-                                        <Switch onChange={handleFormData} id='status' name='status' />
+                                        <Switch id='status' name='status' />
                                         <Label htmlFor='status'>NonActive</Label>
                                     </div>
                                 </div>
