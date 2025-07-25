@@ -1,5 +1,6 @@
+'use client'
 import SideBar from '@/components/SideBar'
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,7 +11,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Image, Video } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import {
@@ -23,8 +24,41 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import { useRouter } from 'next/navigation'
 
 const AddProductPage = () => {
+    const router = useRouter();
+    const [formData, setFormData] = useState({
+        product_images: [],
+        product_video: [],
+        product_name: '',
+        product_category: '',
+        product_description: '',
+        status: 0,
+        product_brand: '',
+        product_ingredient: '',
+        product_sku: '',
+        product_stock: 0,
+    });
+
+    const handleFormData = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = event.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        console.log(formData);
+    };
+
+    // Handle Submit Button
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+    }
+
+
+    // Handle Back button
+    const handleBack = (e: any) => {
+        e.preventDefault();
+        router.push('/dashboard/products');
+    }
+
     return (
         <div className='w-full h-auto flex'>
             <SideBar />
@@ -62,7 +96,7 @@ const AddProductPage = () => {
                         </div>
                     </header>
 
-                    <section className='flex flex-col gap-3 py-2 w-full h-auto'>
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-3 py-2 w-full h-auto'>
                         <h2 className='font-semibold text-2xl font-mono'>
                             New Product
                         </h2>
@@ -124,7 +158,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <Input onChange={(value) => handleFormData('product_name', value)} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/40</p>
                                         </div>
@@ -136,11 +170,11 @@ const AddProductPage = () => {
                                     <div className='flex flex-col gap-2'>
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Category <sup className='text-red-500'>*</sup></h3>
                                         <p className='text-xs text-primary/80 w-sm '>
-                                           Choose your product category so that it can be included in your store category list.
+                                            Choose your product category so that it can be included in your store category list.
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Select>
+                                        <Select onValueChange={(value) => handleFormData("product_category", value)}>
                                             <SelectTrigger className="w-full text-xs">
                                                 <SelectValue placeholder="Choose Category" />
                                             </SelectTrigger>
@@ -164,12 +198,12 @@ const AddProductPage = () => {
                                     <div className='flex flex-col gap-2 pt-6'>
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Product Description <sup className='text-red-500'>*</sup></h3>
                                         <p className='text-xs text-primary/80 w-sm '>
-                                         Add a minimum of 3000 words by explaining the category of the product.
+                                            Add a minimum of 3000 words by explaining the category of the product.
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
-                                       <Textarea placeholder='Write Product Description' className='text-xs' />
-                                       <div className='flex w-full justify-end items-start'>
+                                        <Textarea onChange={(value) => handleFormData('product_description', value)} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
+                                        <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/3000</p>
                                         </div>
                                     </div>
@@ -188,39 +222,21 @@ const AddProductPage = () => {
                                     <div className='flex flex-col w-sm gap-2'>
                                         <h3 className='text-sm font-medium'>Status <sup className='text-red-500'>*</sup></h3>
                                     </div>
-                                    <div className='w-auto h-auto p-3 gap-3 flex justify-center items-center'>
-                                    <Switch id='active' />
-                                    <Label htmlFor='active'>NonActive</Label>
-                                    </div>
-                                </div>
-
-                        
-
-                                {/* Product Name */}
-                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
-                                    <div className='flex flex-col gap-2'>
-                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Name <sup className='text-red-500'>*</sup></h3>
-                                        <p className='text-xs text-primary/80 w-sm '>
-                                            Add a max of 40 words to make the product more informing. Example of adding colour, brand etc.
-                                        </p>
-                                    </div>
-                                    <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input type='text' name='product-name' id='product-name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
-                                        <div className='flex w-full justify-end items-start'>
-                                            <p className='text-xs text-primary/80'>0/40</p>
-                                        </div>
+                                    <div className='w-full h-auto p-3 gap-3 flex justify-start items-start'>
+                                        <Switch onChange={handleFormData} id='status' name='status' />
+                                        <Label htmlFor='status'>NonActive</Label>
                                     </div>
                                 </div>
 
                                 {/* Product Brand */}
                                 <div className='product-photos w-auto h-auto items-center flex gap-3'>
-                                    <div className='flex flex-col gap-2'>
+                                    <div className='flex flex-col gap-2 w-sm'>
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Brand <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Select>
+                                        <Select name='product_brand'>
                                             <SelectTrigger className="w-full text-xs">
-                                                <SelectValue placeholder="Select Brand" />
+                                                <SelectValue onChange={handleFormData} id='product_brand' placeholder="Select Brand" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="brand-1">Brand 1</SelectItem>
@@ -235,25 +251,60 @@ const AddProductPage = () => {
                                     </div>
                                 </div>
 
-                                {/* Product Description */}
-                                <div className='product-photos w-auto h-auto items-start  flex gap-3'>
-                                    <div className='flex flex-col gap-2 pt-6'>
-                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Description <sup className='text-red-500'>*</sup></h3>
-                                        <p className='text-xs text-primary/80 w-sm '>
-                                         Add a minimum of 3000 words by explaining the category of the product.
-                                        </p>
+                                {/* Product Ingredients */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2 w-sm'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Ingredients <sup className='text-red-500'>*</sup></h3>
                                     </div>
-                                    <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
-                                       <Textarea placeholder='Write Product Description' className='text-xs' />
-                                       <div className='flex w-full justify-end items-start'>
-                                            <p className='text-xs text-primary/80'>0/3000</p>
-                                        </div>
+                                    <div className='w-full h-auto p-3 flex justify-center items-center'>
+                                        <Select name='product_ingredient'>
+                                            <SelectTrigger className="w-full text-xs">
+                                                <SelectValue onChange={handleFormData} id='product_ingredient' placeholder="Select Ingrediets" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="ingredient-1">Ingredient 1</SelectItem>
+                                                <SelectItem value="ingredient-2">Ingredient 2</SelectItem>
+                                                <SelectItem value="ingredient-3">Ingredient 3</SelectItem>
+                                                <SelectItem value="ingredient-4">Ingredient 4</SelectItem>
+                                                <SelectItem value="ingredient-5">Ingredient 5</SelectItem>
+                                                <SelectItem value="ingredient-6">Ingredient 6</SelectItem>
+                                                <SelectItem value="ingredient-7">Ingredient 7</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+
+                                {/* Product SKU */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2 w-sm'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product SKU <sup className='text-red-500'>*</sup></h3>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
+                                        <Input onChange={handleFormData} type='text' name='product_sku' id='product_sku' className='text-xs h-10' placeholder='Enter SKU' />
+                                    </div>
+                                </div>
+
+                                {/* Product Stock */}
+                                <div className='product-photos w-auto h-auto items-center flex gap-3'>
+                                    <div className='flex flex-col gap-2 w-sm'>
+                                        <h3 className='text-sm font-medium flex gap-1 items-center'>Product Stock <sup className='text-red-500'>*</sup></h3>
+                                    </div>
+                                    <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
+                                        <Input onChange={handleFormData} type='text' name='product_stock' id='product_stock' className='text-xs h-10' placeholder='Enter Stock' />
                                     </div>
                                 </div>
 
                             </CardContent>
                         </Card>
-                    </section>
+                        <div className='flex gap-3 justify-end p-3'>
+                            <div className='w-auto h-auto'>
+                                <Button className='w-auto text-xs bg-primary-foreground border-secondary/20 border' onClick={handleBack}> Back</Button>
+                            </div>
+                            <div className='w-auto h-auto'>
+                                <Button type='submit' className='w-auto text-xs bg-primary text-primary-foreground border-secondary/20 border' onClick={() => handleBack}> Save & Show</Button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
