@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: any) {
   await connectToDB();
-  const body = await req.json;
+  const body = await req.json();
+  console.log(req.body);
   console.log(body);
 
   return NextResponse.json({

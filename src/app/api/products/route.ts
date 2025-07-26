@@ -1,7 +1,7 @@
-import { connectToDB } from "@/lib/db";
+// import { connectToDB } from "@/lib/db";
 
-export async function POST(req: any) {
-    await connectToDB()
-    const body = await req.body;
-    console.log(body)
-}
+// export async function POST(req: any) {
+//     await connectToDB()
+//     const body = await req.body;
+//     console.log(body)
+// }

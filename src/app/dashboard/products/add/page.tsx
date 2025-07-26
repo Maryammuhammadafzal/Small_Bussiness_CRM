@@ -73,13 +73,15 @@ const AddProductPage = () => {
 
 
         try {
-            const response = await axios.post('http://localhost:3000/api/products/add', formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await axios.post('http://localhost:3000/api/products/add', formData 
+            //     {
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            // }
+        );
 
-            console.log(response.data);
+            console.log(response.data.data);
         } catch (error) {
             console.error('Error submitting form:', error);
         }
