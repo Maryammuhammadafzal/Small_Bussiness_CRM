@@ -26,7 +26,6 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import { headers } from 'next/headers'
 
 // Api Url
 const apiUrl = process.env.API_URL;
@@ -72,12 +71,18 @@ const AddProductPage = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-        const response = await axios.post(`${apiUrl}/api/products`, {
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        });
-        const data = await response.data;
-        console.log(data);
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/products/add', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
 
     }
 
