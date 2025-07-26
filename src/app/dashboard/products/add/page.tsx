@@ -1,6 +1,6 @@
 'use client'
 import SideBar from '@/components/SideBar'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -27,21 +27,38 @@ import { Label } from '@/components/ui/label'
 import { useRouter } from 'next/navigation'
 
 const AddProductPage = () => {
-    let nameRef = useRef(null);
+
+    let nameRef = useRef<HTMLInputElement>(null);
 
     const router = useRouter();
-    const [formData, setFormData] = useState({
-        product_images: [],
-        product_video: [],
-        product_name: '',
-        product_category: '',
-        product_description: '',
-        status: 0,
-        product_brand: '',
-        product_ingredient: '',
-        product_sku: '',
-        product_stock: 0,
-    });
+  const [formData, setFormData] = useState<{
+  product_images: File[];
+  product_video: File[];
+  product_name: string;
+  product_category: string;
+  product_description: string;
+  status: number;
+  product_brand: string;
+  product_ingredient: string;
+  product_sku: string;
+  product_stock: number;
+}>({
+  product_images: [],
+  product_video: [],
+  product_name: '',
+  product_category: '',
+  product_description: '',
+  status: 0,
+  product_brand: '',
+  product_ingredient: '',
+  product_sku: '',
+  product_stock: 0,
+});
+
+
+    useEffect(()=> {
+        console.log(formData)
+    })
 
     const handleFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(nameRef?.current)
@@ -120,8 +137,13 @@ const AddProductPage = () => {
                                             <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
                                                 <Image size={24} />
                                                 <h4 className='text-xs text-primary font-semibold'>Add Photos</h4>
-                                                <p className='text-xs text-primary/50'>0/9</p>
-                                                <Input type='file' name='product-image' id='product-image'  />
+                                                <p className='text-xs text-primary/50'>{formData.product_images.length}/9</p>
+                                                <Input name='product_images' id='product_images' type="file" multiple className='' accept='image/*' onChange={(e) => {
+                                                    const files = e.target.files
+                                                    if (files && files.length > 0) {
+                                                        setFormData({...formData , product_images : Array.from(files)})
+                                                    }
+                                                }} />
                                             </CardContent>
                                         </Card>
                                     </div>
@@ -148,6 +170,12 @@ const AddProductPage = () => {
                                             <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
                                                 <Video size={24} />
                                                 <h4 className='text-xs text-primary font-semibold'>Add Video</h4>
+                                                <Input name='product_video' id='product_video' type="file" className='' accept='video/*' onChange={(e) => {
+                                                    const file = e.target.files
+                                                    if (file && file.length > 0) {
+                                                        setFormData({...formData , product_video : Array.from(file)})
+                                                    }
+                                                }} />
                                             </CardContent>
                                         </Card>
                                     </div>
@@ -162,7 +190,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input ref={nameRef} onChange={() => handleFormData} maxLength={40} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <Input onChange={(e) => setFormData({...formData , product_name : e.target?.value})} maxLength={40} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/40</p>
                                         </div>
@@ -178,7 +206,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Select onValueChange={() => handleFormData}>
+                                        <Select onValueChange={(e) => setFormData({...formData , product_category: e.target.value})}>
                                             <SelectTrigger className="w-full text-xs">
                                                 <SelectValue placeholder="Choose Category" />
                                             </SelectTrigger>
