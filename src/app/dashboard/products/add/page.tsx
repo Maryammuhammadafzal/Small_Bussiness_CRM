@@ -121,6 +121,7 @@ const AddProductPage = () => {
                                                 <Image size={24} />
                                                 <h4 className='text-xs text-primary font-semibold'>Add Photos</h4>
                                                 <p className='text-xs text-primary/50'>0/9</p>
+                                                <Input type='file' name='product-image' id='product-image'  />
                                             </CardContent>
                                         </Card>
                                     </div>

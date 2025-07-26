@@ -121,8 +121,17 @@
   }
 }
 .dotted-background {
-  
+
   background: radial-gradient(#e9e7e7a5 1px ,black 0);
   background-size: 30px 30px;
   background-position: center;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
