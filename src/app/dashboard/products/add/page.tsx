@@ -25,51 +25,60 @@ import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import { headers } from 'next/headers'
+
+// Api Url
+const apiUrl = process.env.API_URL;
 
 const AddProductPage = () => {
-
-    let nameRef = useRef<HTMLInputElement>(null);
-
     const router = useRouter();
-  const [formData, setFormData] = useState<{
-  product_images: File[];
-  product_video: File[];
-  product_name: string;
-  product_category: string;
-  product_description: string;
-  status: number;
-  product_brand: string;
-  product_ingredient: string;
-  product_sku: string;
-  product_stock: number;
-}>({
-  product_images: [],
-  product_video: [],
-  product_name: '',
-  product_category: '',
-  product_description: '',
-  status: 0,
-  product_brand: '',
-  product_ingredient: '',
-  product_sku: '',
-  product_stock: 0,
-});
+    const [formData, setFormData] = useState<{
+        product_images: File[];
+        product_video: File[];
+        product_name: string;
+        product_category: string;
+        product_description: string;
+        status: number;
+        product_brand: string;
+        product_ingredient: string;
+        product_sku: string;
+        product_stock: number;
+    }>({
+        product_images: [],
+        product_video: [],
+        product_name: '',
+        product_category: '',
+        product_description: '',
+        status: 0,
+        product_brand: '',
+        product_ingredient: '',
+        product_sku: '',
+        product_stock: 0,
+    });
 
 
-    useEffect(()=> {
+    useEffect(() => {
         console.log(formData)
     })
 
     const handleFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(nameRef?.current)
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         console.log(formData);
     };
 
     // Handle Submit Button
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
+
+        const response = await axios.post(`${apiUrl}/api/products`, {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        const data = await response.data;
+        console.log(data);
+
     }
 
 
@@ -141,7 +150,7 @@ const AddProductPage = () => {
                                                 <Input name='product_images' id='product_images' type="file" multiple className='' accept='image/*' onChange={(e) => {
                                                     const files = e.target.files
                                                     if (files && files.length > 0) {
-                                                        setFormData({...formData , product_images : Array.from(files)})
+                                                        setFormData({ ...formData, product_images: Array.from(files) })
                                                     }
                                                 }} />
                                             </CardContent>
@@ -173,7 +182,7 @@ const AddProductPage = () => {
                                                 <Input name='product_video' id='product_video' type="file" className='' accept='video/*' onChange={(e) => {
                                                     const file = e.target.files
                                                     if (file && file.length > 0) {
-                                                        setFormData({...formData , product_video : Array.from(file)})
+                                                        setFormData({ ...formData, product_video: Array.from(file) })
                                                     }
                                                 }} />
                                             </CardContent>
@@ -190,7 +199,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={(e) => setFormData({...formData , product_name : e.target?.value})} maxLength={40} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <Input onChange={(e) => setFormData({ ...formData, product_name: e.target?.value })} maxLength={40} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/40</p>
                                         </div>
@@ -206,7 +215,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Select onValueChange={(e) => setFormData({...formData , product_category: e.target.value})}>
+                                        <Select onValueChange={(value) => setFormData({ ...formData, product_category: value })}>
                                             <SelectTrigger className="w-full text-xs">
                                                 <SelectValue placeholder="Choose Category" />
                                             </SelectTrigger>
@@ -234,7 +243,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
-                                        <Textarea onChange={() => handleFormData} minLength={1500} maxLength={3000} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
+                                        <Textarea onChange={(e) => setFormData({ ...formData, product_description: e.target?.value })} minLength={1500} maxLength={3000} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/3000</p>
                                         </div>
@@ -255,7 +264,7 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium'>Status <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 gap-3 flex justify-start items-start'>
-                                        <Switch id='status' name='status' />
+                                        <Switch onCheckedChange={(checked) => setFormData({ ...formData, status: checked ? 1 : 0 })} id='status' name='status' />
                                         <Label htmlFor='status'>NonActive</Label>
                                     </div>
                                 </div>
@@ -266,7 +275,7 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Brand <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Select name='product_brand'>
+                                        <Select onValueChange={(value) => setFormData({ ...formData, product_brand: value })} name='product_brand'>
                                             <SelectTrigger className="w-full text-xs">
                                                 <SelectValue onChange={handleFormData} id='product_brand' placeholder="Select Brand" />
                                             </SelectTrigger>
@@ -289,9 +298,9 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Ingredients <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 flex justify-center items-center'>
-                                        <Select name='product_ingredient'>
+                                        <Select onValueChange={(value) => setFormData({ ...formData, product_ingredient: value })} name='product_ingredient'>
                                             <SelectTrigger className="w-full text-xs">
-                                                <SelectValue onChange={handleFormData} id='product_ingredient' placeholder="Select Ingrediets" />
+                                                <SelectValue id='product_ingredient' placeholder="Select Ingrediets" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="ingredient-1">Ingredient 1</SelectItem>
@@ -312,7 +321,7 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Product SKU <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={handleFormData} type='text' name='product_sku' id='product_sku' className='text-xs h-10' placeholder='Enter SKU' />
+                                        <Input onChange={(e) => setFormData({ ...formData, product_sku: e.target?.value })} type='text' name='product_sku' id='product_sku' className='text-xs h-10' placeholder='Enter SKU' />
                                     </div>
                                 </div>
 
@@ -322,7 +331,7 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Product Stock <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={handleFormData} type='text' name='product_stock' id='product_stock' className='text-xs h-10' placeholder='Enter Stock' />
+                                        <Input onChange={(e) => setFormData({ ...formData, product_stock: Number(e.target?.value) })} type='text' name='product_stock' id='product_stock' className='text-xs h-10' placeholder='Enter Stock' />
                                     </div>
                                 </div>
 
@@ -333,7 +342,7 @@ const AddProductPage = () => {
                                 <Button className='w-auto text-xs bg-primary-foreground border-secondary/20 border' onClick={handleBack}> Back</Button>
                             </div>
                             <div className='w-auto h-auto'>
-                                <Button type='submit' className='w-auto text-xs bg-primary text-primary-foreground border-secondary/20 border' onClick={() => handleBack}> Save & Show</Button>
+                                <Button type='submit' className='w-auto text-xs bg-primary text-primary-foreground border-secondary/20 border' onClick={() => handleSubmit}> Save & Show</Button>
                             </div>
                         </div>
                     </form>
