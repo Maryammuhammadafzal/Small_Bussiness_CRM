@@ -61,6 +61,8 @@ const AddProductPage = () => {
 
     useEffect(() => {
         console.log(formData)
+        console.log(error)
+        
     })
 
     const handleFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,8 +151,8 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium'>Product Photos <sup className='text-red-500'>*</sup></h3>
                                         <p className='text-xs w-sm text-primary/80'>The image format must be .png or .jpg . The image size is 0 icons 250 x 250. Drag and upload an image of at icons 3 images in order to attract user. </p>
                                     </div>
-                                    <div className='w-auto h-auto p-3 flex justify-center items-center'>
-                                        <Card className='w-[110px] h-[120px] flex flex-col gap-1 justify-center items-center '>
+                                    <div className='w-auto h-auto p-3 flex flex-col gap-1 justify-center'>
+                                        <Card className='w-[110px] h-[120px] flex justify-center items-center '>
                                             <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
                                                 <Image size={24} />
                                                 <h4 className='text-xs text-primary font-semibold'>Add Photos</h4>
@@ -163,7 +165,7 @@ const AddProductPage = () => {
                                                 }} />
                                             </CardContent>
                                         </Card>
-                                        {error && <p className="text-red-500 text-sm">{error}</p>}
+                                        {formData.product_images.length > 9 && <p className="text-red-500 text-xs">You can upload a maximum of 9 pictures.</p>}
                                     </div>
                                 </div>
 
