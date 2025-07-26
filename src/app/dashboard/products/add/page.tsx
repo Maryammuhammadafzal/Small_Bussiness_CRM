@@ -210,12 +210,32 @@ const AddProductPage = () => {
                                             <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
                                                 <Video size={24} />
                                                 <h4 className='text-xs text-primary font-semibold'>Add Video</h4>
-                                                <Input name='product_video' id='product_video' type="file" className='' accept='video/*' onChange={(e) => {
-                                                    const file = e.target.files
-                                                    if (file && file.length > 0) {
-                                                        setFormData({ ...formData, product_video: Array.from(file) })
+                                                <Input name='product_video' id='product_video' type="file" className='' accept='video/mp4,video/*' onChange={(e) => {
+                                                    const file = e.target.files?.[0]
+                                                    if (file) {
+                                                        setFormData({ ...formData, product_video: [file] })
+                                                        const maxSize = 3000 * 1024 * 1024;
+                                                        if (file.size > maxSize) {
+                                                            toast.error(`"${file.name}" exceeds max size of 3000MB.`);
+                                                            return;
+                                                        }
+                                                        const video = document.createElement('video');
+                                                        video.preload = 'metadata';
+                                                        video.src = URL.createObjectURL(file);
+
+                                                        video.onloadedmetadata = () => {
+                                                            URL.revokeObjectURL(video.src);
+                                                            const { duration, videoWidth: w, videoHeight: h } = video;
+
+                                                            if (duration < 10 || duration > 60)
+                                                                return toast.error(`"${file.name}" must be 10-60 sec long.`);
+
+                                                            if (w > 1200 || h > 1200)
+                                                                return toast.error(`"${file.name}" exceeds 1200x1200 resolution.`);
+                                                        }
                                                     }
-                                                }} />
+                                                }
+                                                } />
                                             </CardContent>
                                         </Card>
                                     </div>
@@ -230,9 +250,18 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={(e) => setFormData({ ...formData, product_name: e.target?.value })} maxLength={40} type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
-                                        <div className='flex w-full justify-end items-start'>
-                                            <p className='text-xs text-primary/80'>0/40</p>
+                                        <Input onChange={(e) => {
+                                            const words = e.target?.value.trim().split(/\s+/);
+                                            if (words.length > 40) return setError("product Name should not be exceed of 40 words")
+                                            else if (words.length < 40) return setError(null)
+                                            else {
+                                                setFormData({ ...formData, product_name: e.target?.value })
+                                            }
+                                        }}
+                                            type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <div className='flex w-full justify-between items-start'>
+                                            <p className="text-red-500 text-xs">{error && "Product Name should not be exceed 40 words"}</p>
+                                            <p className='text-xs text-primary/80'>{formData.product_name.trim().split(/\s+/).length }/40</p>
                                         </div>
                                     </div>
                                 </div>
