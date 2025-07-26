@@ -26,12 +26,14 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 // Api Url
 const apiUrl = process.env.API_URL;
 
 const AddProductPage = () => {
     const router = useRouter();
+    const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState<{
         product_images: File[];
         product_video: File[];
@@ -62,7 +64,10 @@ const AddProductPage = () => {
     })
 
     const handleFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
+        const { name, value, files } = event.target;
+        if (event.target.name === "product_images" && files && files.length > 9) {
+            setError("You can upload a maximum of 9 pictures.");
+        }
         setFormData((prev) => ({ ...prev, [name]: value }));
         console.log(formData);
     };
@@ -71,6 +76,9 @@ const AddProductPage = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
+        if (!formData.product_images) {
+            toast.error("Product Pictures are required");
+        }
 
         try {
             const response = await axios.post('http://localhost:3000/api/products/add', formData);
@@ -142,7 +150,7 @@ const AddProductPage = () => {
                                         <p className='text-xs w-sm text-primary/80'>The image format must be .png or .jpg . The image size is 0 icons 250 x 250. Drag and upload an image of at icons 3 images in order to attract user. </p>
                                     </div>
                                     <div className='w-auto h-auto p-3 flex justify-center items-center'>
-                                        <Card className='w-[110px] h-[120px] flex justify-center items-center '>
+                                        <Card className='w-[110px] h-[120px] flex flex-col gap-1 justify-center items-center '>
                                             <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
                                                 <Image size={24} />
                                                 <h4 className='text-xs text-primary font-semibold'>Add Photos</h4>
@@ -155,6 +163,7 @@ const AddProductPage = () => {
                                                 }} />
                                             </CardContent>
                                         </Card>
+                                        {error && <p className="text-red-500 text-sm">{error}</p>}
                                     </div>
                                 </div>
 
@@ -174,7 +183,7 @@ const AddProductPage = () => {
                                             </li>
                                         </ul>
                                     </div>
-                                    <div className='w-auto h-auto p-3 flex justify-center items-center'>
+                                    <div className='w-auto h-auto p-3 flex flex-col gap-1 justify-center items-center'>
                                         <Card className='w-[110px] h-[120px] flex justify-center items-center '>
                                             <CardContent className='flex justify-center items-center gap-1 flex-col p-0'>
                                                 <Video size={24} />
