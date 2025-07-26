@@ -62,7 +62,7 @@ const AddProductPage = () => {
     useEffect(() => {
         console.log(formData)
         console.log(error)
-        
+
     })
 
     const handleFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,9 +78,9 @@ const AddProductPage = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-        if (!formData.product_images) {
-            toast.error("Product Pictures are required");
-        }
+        if (!formData.product_images) return toast.error("Product Pictures are required");
+        else if (formData.product_images.length === 0) return toast.error("Product Pictures are required");
+
 
         try {
             const response = await axios.post('http://localhost:3000/api/products/add', formData);
@@ -149,7 +149,9 @@ const AddProductPage = () => {
                                 <div className='product-photos w-auto h-auto items-center flex gap-3'>
                                     <div className='flex flex-col gap-2'>
                                         <h3 className='text-sm font-medium'>Product Photos <sup className='text-red-500'>*</sup></h3>
-                                        <p className='text-xs w-sm text-primary/80'>The image format must be .png or .jpg . The image size is 0 icons 250 x 250. Drag and upload an image of at icons 3 images in order to attract user. </p>
+                                        <p className='text-xs w-sm text-primary/80'>The image format must be .png or .jpg.
+                                            The recommended size is 250x250 pixels.
+                                            Please upload at least 3 images to attract users. </p>
                                     </div>
                                     <div className='w-auto h-auto p-3 flex flex-col gap-1 justify-center'>
                                         <Card className='w-[110px] h-[120px] flex justify-center items-center '>
@@ -157,12 +159,30 @@ const AddProductPage = () => {
                                                 <Image size={24} />
                                                 <h4 className='text-xs text-primary font-semibold'>Add Photos</h4>
                                                 <p className='text-xs text-primary/50'>{formData.product_images.length}/9</p>
-                                                <Input name='product_images' id='product_images' type="file" multiple className='' accept='image/*' onChange={(e) => {
-                                                    const files = e.target.files
+                                                <Input name='product_images' id='product_images' type="file" multiple className='' accept=".jpeg, .jpg, .png" onChange={(e) => {
+                                                    const files = (e.target.files)
                                                     if (files && files.length > 0) {
-                                                        setFormData({ ...formData, product_images: Array.from(files) })
+                                                        const images = Array.from(files);
+                                                        setFormData({ ...formData, product_images: images })
+                                                        Array.from(files).forEach((file) => {
+                                                            const img = new window.Image();
+                                                            img.src = URL.createObjectURL(file);
+                                                            img.onload = () => {
+                                                                const width = img.naturalWidth;
+                                                                const height = img.naturalHeight;
+
+                                                                if (width > 512 || height > 512) {
+                                                                    toast.error(`"${file.name}" exceeds 250x250 size.`);
+                                                                }
+                                                                if (width < 250 || height < 250) {
+                                                                    toast.error(`"${file.name}" must be at least 250x250 pixels.`);
+                                                                }
+                                                            };
+                                                        })
+
                                                     }
-                                                }} />
+                                                }
+                                                } />
                                             </CardContent>
                                         </Card>
                                         {formData.product_images.length > 9 && <p className="text-red-500 text-xs">You can upload a maximum of 9 pictures.</p>}
