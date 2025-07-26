@@ -73,14 +73,7 @@ const AddProductPage = () => {
 
 
         try {
-            const response = await axios.post('http://localhost:3000/api/products/add', formData 
-            //     {
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // }
-        );
-
+            const response = await axios.post('http://localhost:3000/api/products/add', formData);
             console.log(response.data.data);
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -338,7 +331,7 @@ const AddProductPage = () => {
                                         <h3 className='text-sm font-medium flex gap-1 items-center'>Product Stock <sup className='text-red-500'>*</sup></h3>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={(e) => setFormData({ ...formData, product_stock: Number(e.target?.value) })} type='text' name='product_stock' id='product_stock' className='text-xs h-10' placeholder='Enter Stock' />
+                                        <Input onChange={(e) => console.log(e.target?.value)} type='text' name='product_stock' id='product_stock' className='text-xs h-10' placeholder='Enter Stock' />
                                     </div>
                                 </div>
 
