@@ -44,7 +44,7 @@ const AddProductPage = () => {
     });
 
     const handleFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(nameRef?.current?.value);
+        console.log(nameRef?.current)
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         console.log(formData);

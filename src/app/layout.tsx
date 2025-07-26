@@ -7,13 +7,15 @@ import { Toaster } from "@/components/ui/sonner"
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap'
 });
 
 const lato = Lato({
   variable: "--font-lato",
   subsets: ["latin"],
   weight: ['100', '300', '400', '700', '900'],
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
