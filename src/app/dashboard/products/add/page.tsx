@@ -83,7 +83,10 @@ const AddProductPage = () => {
         else if (formData.product_name.trim().split(/\s+/).length === 0) return toast.error("Product name is required");
         else if (formData.product_name.trim().split(/\s+/).length > 40) return toast.error("Product name should not exeed to 40 words");
         else if (!formData.product_category) return toast.error("Product category is required");
-
+        else if (formData.product_description.trim().split(/\s+/).length === 0) return toast.error("Product description is required");
+        else if (formData.product_description.trim().split(/\s+/).length < 300) return toast.error("Product description must be atleast 300 words");
+        else if (formData.product_description.trim().split(/\s+/).length > 1000) return toast.error("Product description should not exeed to 1000 words");
+        else if (formData.status === 0) return toast.error("Product should not exeed to 1000 words");
 
         try {
             const response = await axios.post('http://localhost:3000/api/products/add', formData);
@@ -263,7 +266,7 @@ const AddProductPage = () => {
                                             type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
                                         <div className='flex w-full justify-between items-start'>
                                             <p className="text-red-500 text-xs">{error && "Product Name should not be exceed 40 words"}</p>
-                                            <p className='text-xs text-primary/80'>{formData.product_name.trim().split(/\s+/).length }/40</p>
+                                            <p className='text-xs text-primary/80'>{formData.product_name.trim().split(/\s+/).length}/40</p>
                                         </div>
                                     </div>
                                 </div>
