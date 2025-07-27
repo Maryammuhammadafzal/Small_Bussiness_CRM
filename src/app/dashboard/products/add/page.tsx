@@ -80,6 +80,9 @@ const AddProductPage = () => {
 
         if (!formData.product_images) return toast.error("Product Pictures are required");
         else if (formData.product_images.length === 0) return toast.error("Product Pictures are required");
+        else if (formData.product_name.trim().split(/\s+/).length === 0) return toast.error("Product name is required");
+        else if (formData.product_name.trim().split(/\s+/).length > 40) return toast.error("Product name should not exeed to 40 words");
+        else if (!formData.product_category) return toast.error("Product category is required");
 
 
         try {
