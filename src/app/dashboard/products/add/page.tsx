@@ -32,6 +32,11 @@ import { toast } from 'sonner'
 const apiUrl = process.env.API_URL;
 
 const AddProductPage = () => {
+    const productNameRef = useRef<HTMLInputElement | null>(null);
+    useEffect(() => {
+        console.log(productNameRef.current?.value);
+    })
+
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState<{
@@ -80,7 +85,7 @@ const AddProductPage = () => {
 
         if (!formData.product_images) return toast.error("Product Pictures are required");
         else if (formData.product_images.length === 0) return toast.error("Product Pictures are required");
-        else if (formData.product_name.trim().split(/\s+/).length === 0) return toast.error("Product name is required");
+        else if (formData.product_name.trim().split(/\s+/).length < 1) return toast.error("Product name is required");
         else if (formData.product_name.trim().split(/\s+/).length > 40) return toast.error("Product name should not exeed to 40 words");
         else if (!formData.product_category) return toast.error("Product category is required");
         else if (formData.product_description.trim().split(/\s+/).length === 0) return toast.error("Product description is required");
@@ -177,7 +182,7 @@ const AddProductPage = () => {
                                                                 const height = img.naturalHeight;
 
                                                                 if (width > 512 || height > 512) {
-                                                                    toast.error(`"${file.name}" exceeds 250x250 size.`);
+                                                                    toast.error(`"${file.name}" exceeds 512x512 size.`);
                                                                 }
                                                                 if (width < 250 || height < 250) {
                                                                     toast.error(`"${file.name}" must be at least 250x250 pixels.`);
@@ -255,7 +260,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={(e) => {
+                                        <Input ref={productNameRef} onChange={(e) => {
                                             const words = e.target?.value.trim().split(/\s+/);
                                             if (words.length > 40) return setError("product Name should not be exceed of 40 words")
                                             else if (words.length < 40) return setError(null)
@@ -266,7 +271,7 @@ const AddProductPage = () => {
                                             type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
                                         <div className='flex w-full justify-between items-start'>
                                             <p className="text-red-500 text-xs">{error && "Product Name should not be exceed 40 words"}</p>
-                                            <p className='text-xs text-primary/80'>{formData.product_name.trim().split(/\s+/).length}/40</p>
+                                            <p className='text-xs text-primary/80'>{formData.product_name.trim().split(/\s+/).length - 1}/40</p>
                                         </div>
                                     </div>
                                 </div>
