@@ -32,11 +32,6 @@ import { toast } from 'sonner'
 const apiUrl = process.env.API_URL;
 
 const AddProductPage = () => {
-    const productNameRef = useRef<HTMLInputElement | null>(null);
-    useEffect(() => {
-        console.log(productNameRef.current?.value);
-    })
-
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState<{
@@ -89,8 +84,8 @@ const AddProductPage = () => {
         else if (formData.product_name.trim().split(/\s+/).length > 40) return toast.error("Product name should not exeed to 40 words");
         else if (!formData.product_category) return toast.error("Product category is required");
         else if (formData.product_description.trim().split(/\s+/).length === 0) return toast.error("Product description is required");
-        else if (formData.product_description.trim().split(/\s+/).length < 300) return toast.error("Product description must be atleast 300 words");
-        else if (formData.product_description.trim().split(/\s+/).length > 1000) return toast.error("Product description should not exeed to 1000 words");
+        else if (formData.product_description.trim().split(/\s+/).length < 100) return toast.error("Product description must be atleast 300 words");
+        else if (formData.product_description.trim().split(/\s+/).length > 300) return toast.error("Product description should not exeed to 1000 words");
         else if (formData.status === 0) return toast.error("Product should not exeed to 1000 words");
 
         try {
@@ -260,7 +255,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input ref={productNameRef} onChange={(e) => {
+                                        <Input onChange={(e) => {
                                             const words = e.target?.value.trim().split(/\s+/);
                                             if (words.length > 40) return setError("product Name should not be exceed of 40 words")
                                             else if (words.length < 40) return setError(null)
@@ -313,7 +308,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
-                                        <Textarea onChange={(e) => setFormData({ ...formData, product_description: e.target?.value })} minLength={1500} maxLength={3000} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
+                                        <Textarea onChange={(e) => setFormData({ ...formData, product_description: e.target?.value })} minLength={100} maxLength={300} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/3000</p>
                                         </div>
