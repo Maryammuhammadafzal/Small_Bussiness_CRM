@@ -74,6 +74,7 @@ const AddProductPage = () => {
         console.log(formData);
     };
 
+
     // Handle Submit Button
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -255,15 +256,27 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                                        <Input onChange={(e) => {
-                                            const words = e.target?.value.trim().split(/\s+/);
-                                            if (words.length > 40) return setError("product Name should not be exceed of 40 words")
-                                            else if (words.length < 40) return setError(null)
-                                            else {
-                                                setFormData({ ...formData, product_name: e.target?.value })
-                                            }
-                                        }}
-                                            type='text' name='product_name' id='product_name' className='text-xs h-10' placeholder='E.g   Samsung Smartwatch + colour' />
+                                        <Input
+                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                const value = e.target.value.trim();
+                                                const words = value.split(/\s+/);
+                                                const wordCount = words.length;
+                                                console.log()
+
+                                                if (wordCount > 40) {
+                                                    setError("Product name should not exceed 40 words");
+                                                } else if (wordCount < 40) {
+                                                    setError(null);
+                                                } else {
+                                                    setFormData({ ...formData, product_name: value });
+                                                }
+                                            }}
+                                            type="text"
+                                            name="product_name"
+                                            id="product_name"
+                                            className="text-xs h-10"
+                                            placeholder="E.g   Samsung Smartwatch + colour"
+                                        />
                                         <div className='flex w-full justify-between items-start'>
                                             <p className="text-red-500 text-xs">{error && "Product Name should not be exceed 40 words"}</p>
                                             <p className='text-xs text-primary/80'>{formData.product_name.trim().split(/\s+/).length - 1}/40</p>
@@ -308,7 +321,7 @@ const AddProductPage = () => {
                                         </p>
                                     </div>
                                     <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
-                                        <Textarea onChange={(e) => setFormData({ ...formData, product_description: e.target?.value })} minLength={100} maxLength={300} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
+                                        <Textarea onChange={(e) => setFormData({ ...formData, product_description: e.target?.value })} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
                                         <div className='flex w-full justify-end items-start'>
                                             <p className='text-xs text-primary/80'>0/3000</p>
                                         </div>

@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
     await connectToDB(); 
 
     const body = await req.json();
+console.log(body);
 
     const newProduct = await Product.create(body);
 
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
     }, { status: 201 });
 
   } catch (error: any) {
-    console.error("POST /api/products error:", error);
+    console.log("POST /api/products error:", error);
 
     return NextResponse.json({
       message: "Failed to add product",
