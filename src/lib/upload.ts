@@ -4,20 +4,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 connectToDB();
 
-const storage = multer.memoryStorage();
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    console.log(req);
-    console.log(file);
-    console.log(cb);
-    if (file.mimetype.startsWith("image/")) {
-      cb(null, true);
-    } else {
-      cb(null, false);
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const dir = './uploads/';
+        mkdirp(dir, err => cb(err, dir));
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
     }
-  },
 });
+
+const upload = multer({
+    storage: storage
+});
+
 
 const uploadMiddleware = (fieldName: string) => {
   return async (
