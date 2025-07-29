@@ -21,6 +21,8 @@ import { toast } from 'sonner'
 
 const AddProductForm = () => {
     const router = useRouter();
+    const [productNameWord, setProductNameWord] = useState<number | 0>(0);
+    const [productDescriptionWord, setProductDescriptionWord] = useState<number | 0>(0);
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState<{
         product_images: File[];
@@ -213,14 +215,15 @@ const AddProductForm = () => {
                                     const value = e.target.value.trim();
                                     const words = value.split(/\s+/);
                                     const wordCount = words.length;
-                                    console.log()
+                                    setProductNameWord(wordCount)
+                                    console.log(value , words , wordCount)
 
                                     if (wordCount > 40) {
-                                        setError("Product name should not exceed 40 words");
+                                        toast.error("Product name should not exceed 40 words");
                                     } else if (wordCount < 40) {
                                         setError(null);
                                     } else {
-                                        setFormData({ ...formData, product_name: value });
+                                        setFormData({ ...formData, product_name: e.target.value });
                                     }
                                 }}
                                 type="text"
@@ -231,7 +234,7 @@ const AddProductForm = () => {
                             />
                             <div className='flex w-full justify-between items-start'>
                                 <p className="text-red-500 text-xs">{error && "Product Name should not be exceed 40 words"}</p>
-                                <p className='text-xs text-primary/80'>{formData.product_name.trim().split(/\s+/).length - 1}/40</p>
+                                <p className='text-xs text-primary/80'>{productNameWord}/40</p>
                             </div>
                         </div>
                     </div>
@@ -273,9 +276,25 @@ const AddProductForm = () => {
                             </p>
                         </div>
                         <div className='w-full h-auto p-3 flex flex-col gap-[2px] justify-center items-center'>
-                            <Textarea onChange={(e) => setFormData({ ...formData, product_description: e.target?.value })} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
+                            <Textarea  onChange={(e) => {
+                                    const value = e.target.value.trim();
+                                    const words = value.split(/\s+/);
+                                    const wordCount = words.length;
+                                    setProductDescriptionWord(wordCount)
+                                    console.log(value , words , wordCount)
+
+                                    if (wordCount > 300) {
+                                        setError("Product description should not exceed 300 words");
+                                    } else if (wordCount < 70) {
+                                        setError("Product description must be atleast 70 words");
+                                    } else if (wordCount < 300 && wordCount > 70) {
+                                        setError(null);
+                                    } else {
+                                        setFormData({ ...formData, product_description: e.target.value });
+                                    }
+                                }} name='product_description' id='product_description' placeholder='Write Product Description' className='text-xs' />
                             <div className='flex w-full justify-end items-start'>
-                                <p className='text-xs text-primary/80'>0/3000</p>
+                                <p className='text-xs text-primary/80'>{productDescriptionWord}/3000</p>
                             </div>
                         </div>
                     </div>
@@ -361,7 +380,7 @@ const AddProductForm = () => {
                             <h3 className='text-sm font-medium flex gap-1 items-center'>Product Stock <sup className='text-red-500'>*</sup></h3>
                         </div>
                         <div className='w-full h-auto p-3 flex gap-[2px] flex-col justify-center items-center'>
-                            <Input onChange={(e) => console.log(e.target?.value)} type='text' name='product_stock' id='product_stock' className='text-xs h-10' placeholder='Enter Stock' />
+                            <Input onChange={(e) => setFormData({...formData, product_stock: Number(e.target?.value)})} type='number' name='product_stock' id='product_stock' className='text-xs h-10' placeholder='Enter Stock' />
                         </div>
                     </div>
 
@@ -372,7 +391,7 @@ const AddProductForm = () => {
                     <Button className='w-auto text-xs bg-primary-foreground border-secondary/20 border' onClick={handleBack}> Back</Button>
                 </div>
                 <div className='w-auto h-auto'>
-                    <Button type='submit' className='w-auto text-xs bg-primary text-primary-foreground border-secondary/20 border' onClick={() => handleSubmit}> Save & Show</Button>
+                    <Button type='submit' className='w-auto text-xs bg-primary text-primary-foreground border-secondary/20 border'> Save & Show</Button>
                 </div>
             </div>
         </form>
