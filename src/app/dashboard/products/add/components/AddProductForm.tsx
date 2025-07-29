@@ -222,6 +222,7 @@ const AddProductForm = () => {
                                         toast.error("Product name should not exceed 40 words");
                                     } else if (wordCount < 40) {
                                         setError(null);
+                                        setFormData({ ...formData, product_name: e.target.value });
                                     } else {
                                         setFormData({ ...formData, product_name: e.target.value });
                                     }
@@ -289,6 +290,7 @@ const AddProductForm = () => {
                                         setError("Product description must be atleast 70 words");
                                     } else if (wordCount < 300 && wordCount > 70) {
                                         setError(null);
+                                        setFormData({ ...formData, product_description: e.target.value });
                                     } else {
                                         setFormData({ ...formData, product_description: e.target.value });
                                     }
